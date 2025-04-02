@@ -29,12 +29,13 @@ export default function DhoondlaiLanding() {
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur-sm bg-opacity-80">
         <div className="container mx-auto max-w-7xl flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Search className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-600" />
-            <span className="text-lg sm:text-xl font-bold text-yellow-600 tracking-tight">
-              Dhoondlai!
-            </span>
-          </div>
+          <Link to="/" className="flex items-center gap-2">
+            <img
+              src="/dhoondlai.svg"
+              alt="Dhoondlai Logo"
+              className="h-15 w-15 sm:h-15 sm:w-15"
+            />
+          </Link>
           <nav className="hidden md:flex gap-6">
             <Link
               to="#status"
@@ -58,6 +59,9 @@ export default function DhoondlaiLanding() {
           <Button
             variant="outline"
             className="hidden md:flex border-yellow-600 text-yellow-600 hover:bg-yellow-50 transition-all"
+            onClick={() =>
+              window.open("https://github.com/Dhoondlai", "_blank")
+            }
           >
             <Github className="mr-2 h-4 w-4" />
             GitHub
@@ -93,12 +97,17 @@ export default function DhoondlaiLanding() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-white md:hidden">
           <div className="container flex h-16 items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Search className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-600" />
-              <span className="text-lg sm:text-xl font-bold text-yellow-600 tracking-tight">
-                Dhoondlai!
-              </span>
-            </div>
+            <Link
+              to="/"
+              className="flex items-center gap-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <img
+                src="/dhoondlai.svg"
+                alt="Dhoondlai Logo"
+                className="h-8 w-8 sm:h-9 sm:w-9"
+              />
+            </Link>
             <Button
               variant="ghost"
               size="sm"
@@ -132,7 +141,10 @@ export default function DhoondlaiLanding() {
             <Button
               variant="outline"
               className="mt-4 border-yellow-600 text-yellow-600 hover:bg-yellow-50 transition-all"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                window.open("https://github.com/Dhoondlai", "_blank");
+                setMobileMenuOpen(false);
+              }}
             >
               <Github className="mr-2 h-4 w-4" />
               GitHub
@@ -260,7 +272,50 @@ export default function DhoondlaiLanding() {
                     <TableBody>
                       <TableRow className="hover:bg-gray-50 transition-colors">
                         <TableCell className="font-medium">
-                          Techmatched
+                          <a
+                            href="https://techmatched.pk/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-yellow-600 hover:underline"
+                          >
+                            Techmatched
+                          </a>
+                        </TableCell>
+                        <TableCell>🟠 In Progress</TableCell>
+                        <TableCell>✔️</TableCell>
+                        <TableCell>❎</TableCell>
+                        <TableCell>❎</TableCell>
+                        <TableCell>❎</TableCell>
+                        <TableCell>❎</TableCell>
+                      </TableRow>
+                      <TableRow className="hover:bg-gray-50 transition-colors">
+                        <TableCell className="font-medium">
+                          <a
+                            href="https://junaidtech.pk/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-yellow-600 hover:underline"
+                          >
+                            Junaid Tech
+                          </a>
+                        </TableCell>
+                        <TableCell>🟠 In Progress</TableCell>
+                        <TableCell>✔️</TableCell>
+                        <TableCell>❎</TableCell>
+                        <TableCell>❎</TableCell>
+                        <TableCell>❎</TableCell>
+                        <TableCell>❎</TableCell>
+                      </TableRow>
+                      <TableRow className="hover:bg-gray-50 transition-colors">
+                        <TableCell className="font-medium">
+                          <a
+                            href="https://rbtechngames.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-yellow-600 hover:underline"
+                          >
+                            RB Tech N Games
+                          </a>
                         </TableCell>
                         <TableCell>🟠 In Progress</TableCell>
                         <TableCell>✔️</TableCell>
@@ -288,7 +343,12 @@ export default function DhoondlaiLanding() {
                 Dhoondlai is an open-source project. Help us improve and expand
                 by contributing on GitHub.
               </p>
-              <Button className="px-6 md:px-8 py-4 md:py-6 text-base rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+              <Button
+                className="px-6 md:px-8 py-4 md:py-6 text-base rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                onClick={() =>
+                  window.open("https://github.com/Dhoondlai", "_blank")
+                }
+              >
                 <Github className="mr-2 h-5 w-5" />
                 View on GitHub
               </Button>
@@ -316,12 +376,14 @@ export default function DhoondlaiLanding() {
             >
               Terms of Service
             </Link>
-            <Link
-              to="https://github.com"
+            <a
+              href="https://github.com/Dhoondlai"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-xs sm:text-sm font-medium text-gray-500 hover:text-yellow-600 transition-colors"
             >
               GitHub
-            </Link>
+            </a>
           </nav>
         </div>
       </footer>
