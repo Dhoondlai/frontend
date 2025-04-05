@@ -7,8 +7,9 @@ import {
   MemoryStick,
   Database,
   X,
+  Loader2,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,9 +21,84 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { searchProducts, SearchResult } from "@/lib/api";
 
 export default function DhoondlaiLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handle search
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const result = await searchProducts(searchTerm);
+      setSearchResults(result.data || []);
+      setShowDropdown(true);
+    } catch (error) {
+      console.error("Search error:", error);
+      setSearchResults([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle typing and debounce
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    // Show typing indicator immediately
+    setIsTyping(true);
+
+    // Clear any existing timeout
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+
+    // Set a new timeout for search
+    typingTimeoutRef.current = setTimeout(() => {
+      setIsTyping(false);
+      if (value) {
+        handleSearch();
+      }
+    }, 1000);
+  };
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans">
@@ -163,15 +239,62 @@ export default function DhoondlaiLanding() {
               </h1>
               <div className="w-full max-w-lg space-y-4">
                 <div className="relative group">
+                  {/* Left search icon */}
                   <Search className="absolute left-3.5 top-3.5 h-5 w-5 text-gray-400 group-hover:text-yellow-600 transition-colors" />
+
                   <Input
                     type="search"
                     placeholder="Search for PC parts..."
-                    className="w-full pl-10 py-4 sm:py-6 text-base rounded-xl border-gray-200 shadow-md focus-visible:ring-yellow-500 transition-all"
+                    className={`w-full pl-10 ${
+                      isLoading || isTyping ? "pr-12" : "pr-4"
+                    } py-4 sm:py-6 text-base rounded-xl border-gray-200 shadow-md focus-visible:ring-yellow-500 transition-all`}
+                    value={searchTerm}
+                    onChange={handleInputChange}
+                    onFocus={() =>
+                      searchResults.length > 0 && setShowDropdown(true)
+                    }
                   />
+
+                  {/* Right loading indicator */}
+                  {(isLoading || isTyping) && (
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                      <Loader2 className="h-5 w-5 text-yellow-600 animate-spin" />
+                    </div>
+                  )}
+
+                  {/* Search Results Dropdown */}
+                  {showDropdown && (
+                    <div
+                      ref={dropdownRef}
+                      className="absolute z-50 w-full mt-1 max-h-60 overflow-auto bg-white shadow-lg rounded-md border border-gray-200"
+                    >
+                      {searchResults.length > 0 ? (
+                        searchResults.map((result) => (
+                          <div
+                            key={result._id}
+                            className="px-4 py-2 hover:bg-yellow-50 cursor-pointer text-left"
+                            onClick={() => {
+                              setSearchTerm(result.standard_name);
+                              setShowDropdown(false);
+                            }}
+                          >
+                            {result.standard_name}
+                          </div>
+                        ))
+                      ) : (
+                        <div className="px-4 py-3 text-center text-gray-500">
+                          No results found - refine your search
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-                <Button className="w-full py-4 sm:py-6 text-base rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-                  Search
+                <Button
+                  className="w-full py-4 sm:py-6 text-base rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                  onClick={handleSearch}
+                  disabled={isLoading || isTyping}
+                >
+                  {isLoading || isTyping ? "Searching..." : "Search"}
                 </Button>
               </div>
             </div>
