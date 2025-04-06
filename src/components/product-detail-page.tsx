@@ -154,10 +154,10 @@ export default function ProductDetailPage() {
               Vendor Status
             </Link>
             <Link
-              to="#about"
+              to="/contribute"
               className="text-sm font-medium hover:text-yellow-600 transition-colors"
             >
-              About Us
+              Contribute
             </Link>
             <Link
               to="#products"

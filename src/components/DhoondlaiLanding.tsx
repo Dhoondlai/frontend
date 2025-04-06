@@ -13,15 +13,9 @@ import { useState, useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { searchProducts, SearchResult } from "@/lib/api";
+import { VendorTable } from "@/components/ui/vendor-table";
+import { DonationSection } from "@/components/ui/donation-section";
 
 export default function DhoondlaiLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -128,10 +122,10 @@ export default function DhoondlaiLanding() {
               Vendor Status
             </Link>
             <Link
-              to="#about"
+              to="/contribute"
               className="text-sm font-medium hover:text-yellow-600 transition-colors"
             >
-              About Us
+              Contribute
             </Link>
             <Link
               to="#products"
@@ -209,11 +203,11 @@ export default function DhoondlaiLanding() {
               Vendor Status
             </Link>
             <Link
-              to="#about"
+              to="/contribute"
               className="py-3 text-lg font-medium hover:text-yellow-600 transition-colors border-b"
               onClick={() => setMobileMenuOpen(false)}
             >
-              About Us
+              Contribute
             </Link>
             <Link
               to="#products"
@@ -312,13 +306,14 @@ export default function DhoondlaiLanding() {
         <section id="about" className="w-full py-12 md:py-16 lg:py-20">
           <div className="container mx-auto max-w-7xl px-4 md:px-6">
             <div className="mx-auto max-w-5xl space-y-6 md:space-y-10">
-              <div className="space-y-2 md:space-y-3">
+              <div className="space-y-2 md:space-y-3 text-center">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
-                  🛠️ Dhoondlai - PC Parts Scraper
+                  🛠️ Dhoondlai - Pakistan's PC Price Comparison
                 </h2>
-                <p className="text-gray-600 text-base sm:text-lg md:text-xl font-light">
-                  Find the best prices for PC parts across various vendors in
-                  Pakistan, all in one place.
+                <p className="text-gray-600 text-base sm:text-lg md:text-xl font-light max-w-3xl mx-auto">
+                  Compare prices instantly across Pakistan's top PC retailers.
+                  Save time and money on your next build with our real-time
+                  price tracking.
                 </p>
               </div>
               <div className="grid grid-cols-1 xs:grid-cols-2 gap-4 sm:gap-6 sm:grid-cols-2 md:grid-cols-4">
@@ -361,106 +356,8 @@ export default function DhoondlaiLanding() {
           className="w-full py-12 md:py-16 lg:py-20 bg-gray-50"
         >
           <div className="container mx-auto max-w-7xl px-4 md:px-6">
-            <div className="mx-auto max-w-5xl space-y-6 md:space-y-8">
-              <div className="space-y-2 md:space-y-3">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
-                  🛒 Current Vendors
-                </h2>
-                <p className="text-gray-600 text-base sm:text-lg font-light">
-                  We're constantly adding new vendors to provide you with the
-                  most comprehensive price comparison.
-                </p>
-              </div>
-              <div className="rounded-xl border bg-white shadow-sm overflow-x-auto">
-                <div className="min-w-[700px]">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="bg-yellow-50">
-                        <TableHead className="font-semibold text-gray-900">
-                          Vendor
-                        </TableHead>
-                        <TableHead className="font-semibold text-gray-900">
-                          Status
-                        </TableHead>
-                        <TableHead className="font-semibold text-gray-900">
-                          Processors
-                        </TableHead>
-                        <TableHead className="font-semibold text-gray-900">
-                          Motherboards
-                        </TableHead>
-                        <TableHead className="font-semibold text-gray-900">
-                          RAMs
-                        </TableHead>
-                        <TableHead className="font-semibold text-gray-900">
-                          Graphics Card
-                        </TableHead>
-                        <TableHead className="font-semibold text-gray-900">
-                          SSD
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow className="hover:bg-gray-50 transition-colors">
-                        <TableCell className="font-medium">
-                          <a
-                            href="https://techmatched.pk/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-yellow-600 hover:underline"
-                          >
-                            Techmatched
-                          </a>
-                        </TableCell>
-                        <TableCell>🟠 In Progress</TableCell>
-                        <TableCell>✔️</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                      </TableRow>
-                      <TableRow className="hover:bg-gray-50 transition-colors">
-                        <TableCell className="font-medium">
-                          <a
-                            href="https://junaidtech.pk/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-yellow-600 hover:underline"
-                          >
-                            Junaid Tech
-                          </a>
-                        </TableCell>
-                        <TableCell>🟠 In Progress</TableCell>
-                        <TableCell>✔️</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                      </TableRow>
-                      <TableRow className="hover:bg-gray-50 transition-colors">
-                        <TableCell className="font-medium">
-                          <a
-                            href="https://rbtechngames.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-yellow-600 hover:underline"
-                          >
-                            RB Tech N Games
-                          </a>
-                        </TableCell>
-                        <TableCell>🟠 In Progress</TableCell>
-                        <TableCell>✔️</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                        <TableCell>❎</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-              </div>
-              <p className="text-center text-gray-600 font-medium">
-                More vendors coming soon!
-              </p>
+            <div className="mx-auto max-w-5xl">
+              <VendorTable />
             </div>
           </div>
         </section>
@@ -483,6 +380,13 @@ export default function DhoondlaiLanding() {
                 View on GitHub
               </Button>
             </div>
+          </div>
+        </section>
+
+        {/* Donation Section */}
+        <section className="w-full py-12 md:py-16 lg:py-20 bg-gray-50">
+          <div className="container mx-auto max-w-7xl px-4 md:px-6">
+            <DonationSection />
           </div>
         </section>
       </main>
