@@ -1,4 +1,4 @@
-import { Github, Linkedin, Code } from "lucide-react";
+import { Github, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DonationSection } from "@/components/ui/donation-section";
 import { Header } from "@/components/ui/header";
@@ -56,19 +56,6 @@ export default function ContributePage() {
                       >
                         <Github className="mr-2 h-4 w-4" />
                         GitHub
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-blue-700 text-blue-700"
-                        onClick={() =>
-                          window.open(
-                            "https://www.linkedin.com/in/okHadi",
-                            "_blank"
-                          )
-                        }
-                      >
-                        LinkedIn
                       </Button>
                       <Button
                         variant="outline"

@@ -1,5 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Cpu, HardDrive, MemoryStick, Database, Github } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import {
+  Cpu,
+  HardDrive,
+  MemoryStick,
+  Database,
+  Github,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VendorTable } from "@/components/ui/vendor-table";
 import { DonationSection } from "@/components/ui/donation-section";

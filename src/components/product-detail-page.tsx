@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Search, ArrowUpDown, ExternalLink, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -26,8 +26,6 @@ export default function ProductDetailPage() {
   const [sortOption, setSortOption] = useState<SortOption>("lowest-price");
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [firstBestPriceFound, setFirstBestPriceFound] =
-    useState<boolean>(false);
 
   // Get the product name from URL query parameter
   useEffect(() => {
@@ -109,11 +107,6 @@ export default function ProductDetailPage() {
       setSortedVendors(sorted);
     }
   }, [sortOption, product]);
-
-  // Reset the flag when sorted vendors or lowest price changes
-  useEffect(() => {
-    setFirstBestPriceFound(false);
-  }, [sortedVendors, lowestPrice]);
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans">
