@@ -30,6 +30,8 @@ export default function ProductDetailPage() {
   const [sortOption, setSortOption] = useState<SortOption>("lowest-price");
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [firstBestPriceFound, setFirstBestPriceFound] =
+    useState<boolean>(false);
 
   // Get the product name from URL query parameter
   useEffect(() => {
@@ -86,6 +88,8 @@ export default function ProductDetailPage() {
       )
     : null;
 
+  const lowestPrice = bestPriceVendor?.currentPrice;
+
   // Sort vendors based on selected option
   useEffect(() => {
     if (product?.vendors) {
@@ -109,6 +113,11 @@ export default function ProductDetailPage() {
       setSortedVendors(sorted);
     }
   }, [sortOption, product]);
+
+  // Reset the flag when sorted vendors or lowest price changes
+  useEffect(() => {
+    setFirstBestPriceFound(false);
+  }, [sortedVendors, lowestPrice]);
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans">
@@ -139,10 +148,10 @@ export default function ProductDetailPage() {
 
           <nav className="hidden md:flex gap-6">
             <Link
-              to="#status"
+              to="/vendor-status"
               className="text-sm font-medium hover:text-yellow-600 transition-colors"
             >
-              Product Status
+              Vendor Status
             </Link>
             <Link
               to="#about"
@@ -292,20 +301,25 @@ export default function ProductDetailPage() {
               <div className="container mx-auto max-w-4xl px-4">
                 <div className="flex flex-col space-y-6">
                   {sortedVendors.length > 0 ? (
-                    sortedVendors.map((vendor) => (
-                      <VendorCard
-                        key={vendor.id}
-                        vendor={vendor}
-                        isBestPrice={
-                          bestPriceVendor
-                            ? vendor.id === bestPriceVendor.id
-                            : false
-                        }
-                        formatPrice={formatPrice}
-                        formatDate={formatDate}
-                        getTimeSinceUpdate={getTimeSinceUpdate}
-                      />
-                    ))
+                    sortedVendors.map((vendor, index) => {
+                      // Determine if this vendor has the best price and is the first one with that price
+                      const isBestPrice =
+                        vendor.currentPrice === lowestPrice &&
+                        sortedVendors.findIndex(
+                          (v) => v.currentPrice === lowestPrice
+                        ) === index;
+
+                      return (
+                        <VendorCard
+                          key={`${vendor.id}-${vendor.currentPrice}`}
+                          vendor={vendor}
+                          isBestPrice={isBestPrice}
+                          formatPrice={formatPrice}
+                          formatDate={formatDate}
+                          getTimeSinceUpdate={getTimeSinceUpdate}
+                        />
+                      );
+                    })
                   ) : (
                     <div className="text-center py-10">
                       <p className="text-gray-600">

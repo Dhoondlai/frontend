@@ -122,10 +122,10 @@ export default function DhoondlaiLanding() {
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link
-              to="#status"
+              to="/vendor-status"
               className="text-sm font-medium hover:text-yellow-600 transition-colors"
             >
-              Product Status
+              Vendor Status
             </Link>
             <Link
               to="#about"
@@ -202,11 +202,11 @@ export default function DhoondlaiLanding() {
           </div>
           <nav className="container flex flex-col gap-4 py-8">
             <Link
-              to="#status"
+              to="/vendor-status"
               className="py-3 text-lg font-medium hover:text-yellow-600 transition-colors border-b"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Product Status
+              Vendor Status
             </Link>
             <Link
               to="#about"
