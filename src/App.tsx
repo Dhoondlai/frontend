@@ -1,10 +1,14 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DhoondlaiLanding from "./components/DhoondlaiLanding";
+import ProductDetailPage from "./components/product-detail-page";
 
 function App() {
   return (
     <BrowserRouter>
-      <DhoondlaiLanding />
+      <Routes>
+        <Route path="/" element={<DhoondlaiLanding />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
+      </Routes>
     </BrowserRouter>
   );
 }
