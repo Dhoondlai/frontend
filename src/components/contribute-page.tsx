@@ -1,73 +1,14 @@
-import { Link } from "react-router-dom";
-import { Github, Linkedin, Code, DollarSign } from "lucide-react";
-
+import { Github, Linkedin, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DonationSection } from "@/components/ui/donation-section";
+import { Header } from "@/components/ui/header";
+import { Footer } from "@/components/ui/footer";
 
 export default function ContributePage() {
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur-sm bg-opacity-80">
-        <div className="container mx-auto max-w-7xl flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <img
-              src="/dhoondlai.svg"
-              alt="Dhoondlai Logo"
-              className="h-15 w-15 sm:h-15 sm:w-15"
-            />
-          </Link>
-          <nav className="hidden md:flex gap-6">
-            <Link
-              to="/vendor-status"
-              className="text-sm font-medium hover:text-yellow-600 transition-colors"
-            >
-              Vendor Status
-            </Link>
-            <Link
-              to="/contribute"
-              className="text-sm font-medium hover:text-yellow-600 transition-colors"
-            >
-              Contribute
-            </Link>
-            <Link
-              to="#products"
-              className="text-sm font-medium hover:text-yellow-600 transition-colors"
-            >
-              All Products
-            </Link>
-          </nav>
-          <Button
-            variant="outline"
-            className="hidden md:flex border-yellow-600 text-yellow-600 hover:bg-yellow-50 transition-all"
-            onClick={() =>
-              window.open("https://github.com/Dhoondlai", "_blank")
-            }
-          >
-            <Github className="mr-2 h-4 w-4" />
-            GitHub
-          </Button>
-          <Button variant="ghost" size="sm" className="md:hidden">
-            <span className="sr-only">Toggle menu</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
-          </Button>
-        </div>
-      </header>
+      <Header />
 
       <main className="flex-1">
         {/* About Maintainer Section */}
@@ -79,7 +20,6 @@ export default function ContributePage() {
                   About Dhoondlai
                 </h1>
               </div>
-
               <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
                 <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                   <div className="w-32 h-32 overflow-hidden rounded-full border-4 border-yellow-100">
@@ -128,7 +68,6 @@ export default function ContributePage() {
                           )
                         }
                       >
-                        <Linkedin className="mr-2 h-4 w-4" />
                         LinkedIn
                       </Button>
                       <Button
@@ -166,7 +105,6 @@ export default function ContributePage() {
                   make the project better:
                 </p>
               </div>
-
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-3 mb-4">
@@ -202,7 +140,6 @@ export default function ContributePage() {
                     </Button>
                   </div>
                 </div>
-
                 <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="bg-blue-100 p-2 rounded-full">
@@ -250,35 +187,7 @@ export default function ContributePage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t py-6 md:py-8 bg-white">
-        <div className="container mx-auto max-w-7xl flex flex-col items-center justify-center gap-4 px-4 md:px-6 md:flex-row">
-          <p className="text-center text-xs sm:text-sm text-gray-500">
-            © {new Date().getFullYear()} Dhoondlai. All rights reserved.
-          </p>
-          <nav className="flex flex-wrap justify-center gap-4 md:gap-6">
-            <Link
-              to="#"
-              className="text-xs sm:text-sm font-medium text-gray-500 hover:text-yellow-600 transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to="#"
-              className="text-xs sm:text-sm font-medium text-gray-500 hover:text-yellow-600 transition-colors"
-            >
-              Terms of Service
-            </Link>
-            <a
-              href="https://github.com/Dhoondlai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs sm:text-sm font-medium text-gray-500 hover:text-yellow-600 transition-colors"
-            >
-              GitHub
-            </a>
-          </nav>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
