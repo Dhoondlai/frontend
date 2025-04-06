@@ -1,21 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Github, X, Home, Search } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Github, X, Home } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { SearchBar } from "@/components/ui/search-bar";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
-
-  // Handle search submission
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      navigate(`/product?name=${encodeURIComponent(searchTerm.trim())}`);
-    }
-  };
 
   return (
     <>
@@ -33,16 +23,7 @@ export function Header() {
 
             {/* Search bar moved next to logo */}
             <div className="hidden sm:flex w-64 md:w-80">
-              <form onSubmit={handleSearch} className="relative w-full">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  type="search"
-                  placeholder="Search for PC parts..."
-                  className="w-full pl-9 py-2 text-sm rounded-lg border-gray-200"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </form>
+              <SearchBar size="sm" showLoadingIndicator={false} />
             </div>
           </div>
 
@@ -119,16 +100,7 @@ export function Header() {
 
         {/* Mobile search bar */}
         <div className="sm:hidden px-4 pb-3">
-          <form onSubmit={handleSearch} className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              type="search"
-              placeholder="Search for PC parts..."
-              className="w-full pl-9 py-2 text-sm rounded-lg border-gray-200"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </form>
+          <SearchBar size="sm" />
         </div>
       </header>
 
