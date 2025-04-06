@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Github,
   Search,
@@ -32,6 +32,7 @@ export default function DhoondlaiLanding() {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
 
   // Handle search
   const handleSearch = async () => {
@@ -74,6 +75,13 @@ export default function DhoondlaiLanding() {
         handleSearch();
       }
     }, 1000);
+  };
+
+  // Handle search result click
+  const handleResultClick = (productName: string) => {
+    setSearchTerm(productName);
+    setShowDropdown(false);
+    navigate(`/product?name=${encodeURIComponent(productName)}`);
   };
 
   // Clean up timeout on unmount
@@ -273,10 +281,9 @@ export default function DhoondlaiLanding() {
                           <div
                             key={result._id}
                             className="px-4 py-2 hover:bg-yellow-50 cursor-pointer text-left"
-                            onClick={() => {
-                              setSearchTerm(result.standard_name);
-                              setShowDropdown(false);
-                            }}
+                            onClick={() =>
+                              handleResultClick(result.standard_name)
+                            }
                           >
                             {result.standard_name}
                           </div>

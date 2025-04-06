@@ -63,3 +63,33 @@ export async function searchProducts(name: string): Promise<SearchResponse> {
     throw error;
   }
 }
+
+export async function getProductDetails(name: string): Promise<SearchResponse> {
+  try {
+    const payload = { name };
+    const payloadHash = await getPayloadHash(payload);
+    const apiBaseUrl =
+      import.meta.env["VITE_API_URL"] || "http://127.0.0.1:3001";
+
+    const response = await fetch(`${apiBaseUrl}/api/product/getProduct`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-amz-content-sha256": payloadHash,
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.message || "Failed to fetch product details");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching product details:", error);
+    throw error;
+  }
+}

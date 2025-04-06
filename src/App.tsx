@@ -7,7 +7,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DhoondlaiLanding />} />
-        <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/product" element={<ProductDetailPage />} />
       </Routes>
     </BrowserRouter>
   );

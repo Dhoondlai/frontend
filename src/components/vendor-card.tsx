@@ -15,6 +15,7 @@ interface VendorCardProps {
     minPrice: number;
     lastUpdated: string;
     warranty: number;
+    originalTitle: string; // Add the originalTitle property
   };
   isBestPrice: boolean;
   formatPrice: (price: number) => string;
@@ -84,6 +85,11 @@ export function VendorCard({
               <span className="text-gray-600">Warranty: </span>
               <span className="font-medium">{vendor.warranty} months</span>
             </div>
+          </div>
+
+          <div className="mt-4 text-sm">
+            <span className="text-gray-600">Original Title: </span>
+            <span className="font-medium">{vendor.originalTitle}</span>
           </div>
         </div>
       </CardContent>
