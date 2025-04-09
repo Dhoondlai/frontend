@@ -5,6 +5,7 @@ import VendorStatusPage from "./components/product-status-page";
 import ContributePage from "./components/contribute-page";
 import PrivacyPolicy from "./components/privacy-policy";
 import TermsOfService from "./components/terms-of-service";
+import AllProductsPage from "./components/all-products-page";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/contribute" element={<ContributePage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/products" element={<AllProductsPage />} />
       </Routes>
     </BrowserRouter>
   );

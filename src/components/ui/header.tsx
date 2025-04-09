@@ -52,7 +52,7 @@ export function Header() {
               Contribute
             </Link>
             <Link
-              to="#products"
+              to="/products"
               className="text-sm font-medium bg-yellow-50 px-3 py-2 rounded-md text-yellow-600 hover:bg-yellow-100 transition-colors"
             >
               All Products
@@ -153,7 +153,7 @@ export function Header() {
               Contribute
             </Link>
             <Link
-              to="#products"
+              to="/products"
               className="py-3 text-lg font-medium bg-yellow-50 text-yellow-600 rounded-md px-3 transition-colors border-b"
               onClick={() => setMobileMenuOpen(false)}
             >
