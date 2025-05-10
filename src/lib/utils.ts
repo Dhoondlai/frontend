@@ -18,10 +18,14 @@ export const formatDate = (dateString: string) => {
 
 // Calculate time since last update
 export const getTimeSinceUpdate = (dateString: string) => {
+  console.log(dateString);
   const updateDate = new Date(dateString);
   const now = new Date();
+  // subtract 5 hours from the update date
+  const pktTimeOffset = 5 * 60 * 60 * 1000; // 5 hours in milliseconds
+
   const diffInHours = Math.floor(
-    (now.getTime() - updateDate.getTime()) / (1000 * 60 * 60)
+    (now.getTime() - (updateDate.getTime() - pktTimeOffset)) / (1000 * 60 * 60)
   );
 
   if (diffInHours < 24) {
