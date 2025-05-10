@@ -4,6 +4,7 @@ export interface SearchResult {
   vendor: string;
   price_low: number;
   price_high: string;
+  current_price: number; // Added current price
   warranty: string;
   category: string;
   available: boolean;
@@ -43,6 +44,7 @@ export interface ProductItem {
   vendor?: string;
   price_low?: number;
   price_high?: string;
+  current_price?: number; // Added current price field
   warranty?: string;
   category?: string;
   available?: boolean;

@@ -51,7 +51,7 @@ export default function ProductDetailPage() {
           id: item.vendor.toLowerCase().replace(/\s+/g, "-"),
           name: item.vendor,
           url: item.link,
-          currentPrice: parseInt(item.price_high, 10),
+          currentPrice: item.current_price,
           maxPrice: parseInt(item.price_high, 10),
           minPrice: item.price_low,
           lastUpdated: item.updated_at,
