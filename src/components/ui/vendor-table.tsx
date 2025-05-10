@@ -57,12 +57,30 @@ export function VendorTable({ className }: VendorTableProps) {
               <TableRow className="hover:bg-gray-50 transition-colors">
                 <TableCell className="font-medium">
                   <a
-                    href="https://techmatched.pk/"
+                    href="https://buyerspk.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-yellow-600 hover:underline"
                   >
-                    Techmatched
+                    Buyerspk
+                  </a>
+                </TableCell>
+                <TableCell>🟠 In Progress</TableCell>
+                <TableCell>✔️</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+              </TableRow>
+              <TableRow className="hover:bg-gray-50 transition-colors">
+                <TableCell className="font-medium">
+                  <a
+                    href="https://gamerz.pk/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-600 hover:underline"
+                  >
+                    Gamerz
                   </a>
                 </TableCell>
                 <TableCell>🟠 In Progress</TableCell>
@@ -80,7 +98,7 @@ export function VendorTable({ className }: VendorTableProps) {
                     rel="noopener noreferrer"
                     className="text-yellow-600 hover:underline"
                   >
-                    Junaid Tech
+                    JunaidTech
                   </a>
                 </TableCell>
                 <TableCell>🟠 In Progress</TableCell>
@@ -99,6 +117,42 @@ export function VendorTable({ className }: VendorTableProps) {
                     className="text-yellow-600 hover:underline"
                   >
                     RB Tech N Games
+                  </a>
+                </TableCell>
+                <TableCell>🟠 In Progress</TableCell>
+                <TableCell>✔️</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+              </TableRow>
+              <TableRow className="hover:bg-gray-50 transition-colors">
+                <TableCell className="font-medium">
+                  <a
+                    href="https://techmatched.pk/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-600 hover:underline"
+                  >
+                    Techmatched
+                  </a>
+                </TableCell>
+                <TableCell>🟠 In Progress</TableCell>
+                <TableCell>✔️</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+                <TableCell>❎</TableCell>
+              </TableRow>
+              <TableRow className="hover:bg-gray-50 transition-colors">
+                <TableCell className="font-medium">
+                  <a
+                    href="https://walistech.pk/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-600 hover:underline"
+                  >
+                    Walistech
                   </a>
                 </TableCell>
                 <TableCell>🟠 In Progress</TableCell>
