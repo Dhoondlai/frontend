@@ -11,6 +11,7 @@ import {
   ShoppingBag,
   ExternalLink,
   Filter,
+  ArrowUpDown,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -26,7 +27,16 @@ const PRODUCT_CATEGORIES = {
   gpu: "GPU",
 } as const;
 
+// Hardcoded sort options
+const SORT_OPTIONS = {
+  default: "Default (A-Z)",
+  price_min: "Lowest Price First",
+  price_max: "Highest Price First",
+  vendors_max: "Most Vendors First",
+} as const;
+
 type CategoryKey = keyof typeof PRODUCT_CATEGORIES;
+type SortKey = keyof typeof SORT_OPTIONS;
 
 export default function AllProductsPage() {
   const [products, setProducts] = useState<ProductItem[]>([]);
@@ -36,15 +46,18 @@ export default function AllProductsPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [productsPerPage] = useState(12); // Number of products per page
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSort, setSelectedSort] = useState<SortKey>("default");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        const sortParam = selectedSort === "default" ? undefined : selectedSort;
         const response = await getAllProducts(
           currentPage,
           productsPerPage,
-          selectedCategory || undefined
+          selectedCategory || undefined,
+          sortParam
         );
         setProducts(response.data);
         setTotalPages(response.pagination.pages);
@@ -57,7 +70,7 @@ export default function AllProductsPage() {
     };
 
     fetchProducts();
-  }, [currentPage, productsPerPage, selectedCategory]);
+  }, [currentPage, productsPerPage, selectedCategory, selectedSort]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -67,6 +80,11 @@ export default function AllProductsPage() {
   const handleCategoryChange = (category: string | null) => {
     setSelectedCategory(category);
     setCurrentPage(1); // Reset to first page when changing category
+  };
+
+  const handleSortChange = (sort: SortKey) => {
+    setSelectedSort(sort);
+    setCurrentPage(1); // Reset to first page when changing sort
   };
 
   const renderPagination = () => {
@@ -192,37 +210,117 @@ export default function AllProductsPage() {
           </div>
         ) : (
           <>
-            {/* Category filter */}
-            <div className="mb-6">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center"
-                  >
-                    <Filter className="h-4 w-4 mr-2" />
-                    Filter by Category
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem
-                    onClick={() => handleCategoryChange(null)}
-                    className="cursor-pointer"
-                  >
-                    All Categories
-                  </DropdownMenuItem>
-                  {Object.entries(PRODUCT_CATEGORIES).map(([key, label]) => (
+            {/* Filters and Sort Section */}
+            <div className="mb-6 space-y-4">
+              <div className="flex flex-wrap gap-4 items-center">
+                {/* Category filter */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center"
+                    >
+                      <Filter className="h-4 w-4 mr-2" />
+                      Category:{" "}
+                      {selectedCategory
+                        ? PRODUCT_CATEGORIES[selectedCategory as CategoryKey]
+                        : "All"}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
                     <DropdownMenuItem
-                      key={key}
-                      onClick={() => handleCategoryChange(key as CategoryKey)}
+                      onClick={() => handleCategoryChange(null)}
                       className="cursor-pointer"
                     >
-                      {label}
+                      All Categories
                     </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    {Object.entries(PRODUCT_CATEGORIES).map(([key, label]) => (
+                      <DropdownMenuItem
+                        key={key}
+                        onClick={() => handleCategoryChange(key as CategoryKey)}
+                        className="cursor-pointer"
+                      >
+                        {label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Sort options */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center"
+                    >
+                      <ArrowUpDown className="h-4 w-4 mr-2" />
+                      Sort: {SORT_OPTIONS[selectedSort]}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {Object.entries(SORT_OPTIONS).map(([key, label]) => (
+                      <DropdownMenuItem
+                        key={key}
+                        onClick={() => handleSortChange(key as SortKey)}
+                        className="cursor-pointer"
+                      >
+                        {label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              {/* Active filters display */}
+              {(selectedCategory || selectedSort !== "default") && (
+                <div className="flex flex-wrap gap-2 items-center">
+                  <span className="text-sm text-gray-600">Active filters:</span>
+                  {selectedCategory && (
+                    <Badge
+                      variant="secondary"
+                      className="flex items-center gap-1"
+                    >
+                      Category:{" "}
+                      {PRODUCT_CATEGORIES[selectedCategory as CategoryKey]}
+                      <button
+                        onClick={() => handleCategoryChange(null)}
+                        className="ml-1 hover:bg-gray-200 rounded-full p-0.5"
+                      >
+                        ×
+                      </button>
+                    </Badge>
+                  )}
+                  {selectedSort !== "default" && (
+                    <Badge
+                      variant="secondary"
+                      className="flex items-center gap-1"
+                    >
+                      Sort: {SORT_OPTIONS[selectedSort]}
+                      <button
+                        onClick={() => handleSortChange("default")}
+                        className="ml-1 hover:bg-gray-200 rounded-full p-0.5"
+                      >
+                        ×
+                      </button>
+                    </Badge>
+                  )}
+                  {(selectedCategory || selectedSort !== "default") && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        handleCategoryChange(null);
+                        handleSortChange("default");
+                      }}
+                      className="text-xs text-gray-500 hover:text-gray-700"
+                    >
+                      Clear all
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

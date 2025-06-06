@@ -4,7 +4,7 @@ export interface SearchResult {
   vendor: string;
   price_low: number;
   price_high: string;
-  current_price: number; // Added current price
+  current_price: number;
   warranty: string;
   category: string;
   available: boolean;
@@ -44,7 +44,7 @@ export interface ProductItem {
   vendor?: string;
   price_low?: number;
   price_high?: string;
-  current_price?: number; // Added current price field
+  current_price?: number;
   warranty?: string;
   category?: string;
   available?: boolean;
@@ -52,7 +52,7 @@ export interface ProductItem {
   created_at?: string;
   updated_at?: string;
   standard_name: string;
-  vendors_count?: number; // Added field to show number of vendors
+  vendors_count?: number;
   best_price?: number;
   best_price_vendor?: string;
 }
@@ -132,7 +132,8 @@ export async function getProductDetails(name: string): Promise<SearchResponse> {
 export async function getAllProducts(
   page: number = 1,
   limit: number = 10,
-  category?: string
+  category?: string,
+  sortBy?: string
 ): Promise<AllProductsResponse> {
   try {
     const apiBaseUrl =
@@ -146,6 +147,10 @@ export async function getAllProducts(
 
     if (category) {
       params.append("category", category);
+    }
+
+    if (sortBy) {
+      params.append("sortBy", sortBy);
     }
 
     const response = await fetch(
