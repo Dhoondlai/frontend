@@ -4,6 +4,7 @@ import { getAllProducts, type ProductItem } from "@/lib/api";
 import { formatPrice } from "@/lib/utils";
 import { Header } from "@/components/ui/header";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   ChevronLeft,
   ChevronRight,
@@ -12,6 +13,7 @@ import {
   ExternalLink,
   Filter,
   ArrowUpDown,
+  Search,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -48,6 +50,8 @@ export default function AllProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSort, setSelectedSort] = useState<SortKey>("default");
   const [showDelayedMessage, setShowDelayedMessage] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchInput, setSearchInput] = useState(""); // For the input field
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -65,7 +69,8 @@ export default function AllProductsPage() {
           currentPage,
           productsPerPage,
           selectedCategory || undefined,
-          sortParam
+          sortParam,
+          searchTerm || undefined
         );
         setProducts(response.data);
         setTotalPages(response.pagination.pages);
@@ -83,7 +88,7 @@ export default function AllProductsPage() {
     };
 
     fetchProducts();
-  }, [currentPage, productsPerPage, selectedCategory, selectedSort]);
+  }, [currentPage, productsPerPage, selectedCategory, selectedSort, searchTerm]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -98,6 +103,18 @@ export default function AllProductsPage() {
   const handleSortChange = (sort: SortKey) => {
     setSelectedSort(sort);
     setCurrentPage(1); // Reset to first page when changing sort
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSearchTerm(searchInput);
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
+  const handleSearchClear = () => {
+    setSearchInput("");
+    setSearchTerm("");
+    setCurrentPage(1);
   };
 
   const renderPagination = () => {
@@ -342,6 +359,39 @@ export default function AllProductsPage() {
                   )}
                 </div>
               )}
+
+              {/* Search bar */}
+              <form
+                onSubmit={handleSearchSubmit}
+                className="flex gap-2 items-center"
+              >
+                <Input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  className="flex-1"
+                />
+                <Button
+                  type="submit"
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center"
+                >
+                  <Search className="h-4 w-4 mr-2" />
+                  Search
+                </Button>
+                {searchTerm && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleSearchClear}
+                    className="text-xs text-gray-500 hover:text-gray-700"
+                  >
+                    Clear search
+                  </Button>
+                )}
+              </form>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

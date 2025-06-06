@@ -133,7 +133,8 @@ export async function getAllProducts(
   page: number = 1,
   limit: number = 10,
   category?: string,
-  sortBy?: string
+  sortBy?: string,
+  search?: string
 ): Promise<AllProductsResponse> {
   try {
     const apiBaseUrl =
@@ -144,13 +145,17 @@ export async function getAllProducts(
       page: page.toString(),
       limit: limit.toString(),
     });
-
+    
     if (category) {
-      params.append("category", category);
+      params.append('category', category);
     }
 
     if (sortBy) {
-      params.append("sortBy", sortBy);
+      params.append('sortBy', sortBy);
+    }
+
+    if (search) {
+      params.append('search', encodeURIComponent(search));
     }
 
     const response = await fetch(
