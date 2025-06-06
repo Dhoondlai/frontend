@@ -37,13 +37,17 @@ export function DonationSection({
             <div className="bg-white rounded-lg p-5 border border-gray-200">
               <h4 className="font-medium text-gray-900 mb-3">Bitcoin (BTC)</h4>
               <div className="bg-gray-50 rounded p-3 mb-3 break-all font-mono text-sm text-gray-800">
-                Coming Soon
+                bc1qrdjwzr3tkxaklsjz8e48leh6u93uxzc5h7kd4k
               </div>
               <Button
                 variant="outline"
                 size="sm"
                 className="w-full text-xs"
-                onClick={() => navigator.clipboard.writeText("Coming Soon")}
+                onClick={() =>
+                  navigator.clipboard.writeText(
+                    "bc1qrdjwzr3tkxaklsjz8e48leh6u93uxzc5h7kd4k"
+                  )
+                }
               >
                 Copy Address
               </Button>
@@ -52,13 +56,17 @@ export function DonationSection({
             <div className="bg-white rounded-lg p-5 border border-gray-200">
               <h4 className="font-medium text-gray-900 mb-3">USDT (TRC20)</h4>
               <div className="bg-gray-50 rounded p-3 mb-3 break-all font-mono text-sm text-gray-800">
-                Coming Soon
+                TBJ3nv24Ciaq65vq4iGvx9PATKQ88vf7kM
               </div>
               <Button
                 variant="outline"
                 size="sm"
                 className="w-full text-xs"
-                onClick={() => navigator.clipboard.writeText("Coming Soon")}
+                onClick={() =>
+                  navigator.clipboard.writeText(
+                    "TBJ3nv24Ciaq65vq4iGvx9PATKQ88vf7kM"
+                  )
+                }
               >
                 Copy Address
               </Button>
