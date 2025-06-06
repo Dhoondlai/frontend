@@ -159,7 +159,7 @@ export function VendorTable({ className }: VendorTableProps) {
                 <TableCell>✔️</TableCell>
                 <TableCell>❎</TableCell>
                 <TableCell>❎</TableCell>
-                <TableCell>❎</TableCell>
+                <TableCell>✔️</TableCell>
                 <TableCell>❎</TableCell>
               </TableRow>
             </TableBody>

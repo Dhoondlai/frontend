@@ -47,11 +47,19 @@ export default function AllProductsPage() {
   const [productsPerPage] = useState(12); // Number of products per page
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSort, setSelectedSort] = useState<SortKey>("default");
+  const [showDelayedMessage, setShowDelayedMessage] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        setShowDelayedMessage(false); // Reset delayed message
+
+        // Set up delayed message timer
+        const delayedMessageTimer = setTimeout(() => {
+          setShowDelayedMessage(true);
+        }, 2000);
+
         const sortParam = selectedSort === "default" ? undefined : selectedSort;
         const response = await getAllProducts(
           currentPage,
@@ -62,9 +70,14 @@ export default function AllProductsPage() {
         setProducts(response.data);
         setTotalPages(response.pagination.pages);
         setLoading(false);
+
+        // Clear the timer if loading completes before 2 seconds
+        clearTimeout(delayedMessageTimer);
+        setShowDelayedMessage(false);
       } catch (err) {
         setError("Failed to load products. Please try again later.");
         setLoading(false);
+        setShowDelayedMessage(false);
         console.error(err);
       }
     };
@@ -202,7 +215,15 @@ export default function AllProductsPage() {
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-600"></div>
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-600 mx-auto mb-4"></div>
+              <p className="text-gray-600 mb-2">Loading products...</p>
+              {showDelayedMessage && (
+                <p className="text-sm text-gray-500 animate-fade-in">
+                  If it's your first time visiting this site, it may take some time to load data.
+                </p>
+              )}
+            </div>
           </div>
         ) : error ? (
           <div className="text-center text-red-500 p-8 bg-red-50 rounded-lg">
