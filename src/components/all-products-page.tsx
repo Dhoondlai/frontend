@@ -10,8 +10,23 @@ import {
   Store,
   ShoppingBag,
   ExternalLink,
+  Filter,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+// Hardcoded categories that can be easily modified
+const PRODUCT_CATEGORIES = {
+  processor: "Processor",
+  gpu: "GPU",
+} as const;
+
+type CategoryKey = keyof typeof PRODUCT_CATEGORIES;
 
 export default function AllProductsPage() {
   const [products, setProducts] = useState<ProductItem[]>([]);
@@ -20,12 +35,17 @@ export default function AllProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [productsPerPage] = useState(12); // Number of products per page
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await getAllProducts(currentPage, productsPerPage);
+        const response = await getAllProducts(
+          currentPage,
+          productsPerPage,
+          selectedCategory || undefined
+        );
         setProducts(response.data);
         setTotalPages(response.pagination.pages);
         setLoading(false);
@@ -37,11 +57,16 @@ export default function AllProductsPage() {
     };
 
     fetchProducts();
-  }, [currentPage, productsPerPage]);
+  }, [currentPage, productsPerPage, selectedCategory]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo(0, 0);
+  };
+
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+    setCurrentPage(1); // Reset to first page when changing category
   };
 
   const renderPagination = () => {
@@ -167,6 +192,39 @@ export default function AllProductsPage() {
           </div>
         ) : (
           <>
+            {/* Category filter */}
+            <div className="mb-6">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center"
+                  >
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filter by Category
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    onClick={() => handleCategoryChange(null)}
+                    className="cursor-pointer"
+                  >
+                    All Categories
+                  </DropdownMenuItem>
+                  {Object.entries(PRODUCT_CATEGORIES).map(([key, label]) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onClick={() => handleCategoryChange(key as CategoryKey)}
+                      className="cursor-pointer"
+                    >
+                      {label}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {products.map((product, index) => (
                 <div

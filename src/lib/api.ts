@@ -131,14 +131,25 @@ export async function getProductDetails(name: string): Promise<SearchResponse> {
 
 export async function getAllProducts(
   page: number = 1,
-  limit: number = 10
+  limit: number = 10,
+  category?: string
 ): Promise<AllProductsResponse> {
   try {
     const apiBaseUrl =
       import.meta.env["VITE_API_URL"] || "http://127.0.0.1:3001";
 
+    // Build query parameters
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+    });
+
+    if (category) {
+      params.append("category", category);
+    }
+
     const response = await fetch(
-      `${apiBaseUrl}/api/product/getAllProducts?page=${page}&limit=${limit}`,
+      `${apiBaseUrl}/api/product/getAllProducts?${params}`,
       {
         method: "GET",
         headers: {
