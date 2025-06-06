@@ -105,7 +105,7 @@ export function VendorTable({ className }: VendorTableProps) {
                 <TableCell>✔️</TableCell>
                 <TableCell>❎</TableCell>
                 <TableCell>❎</TableCell>
-                <TableCell>❎</TableCell>
+                <TableCell>✔️</TableCell>
                 <TableCell>❎</TableCell>
               </TableRow>
               <TableRow className="hover:bg-gray-50 transition-colors">
@@ -123,7 +123,7 @@ export function VendorTable({ className }: VendorTableProps) {
                 <TableCell>✔️</TableCell>
                 <TableCell>❎</TableCell>
                 <TableCell>❎</TableCell>
-                <TableCell>❎</TableCell>
+                <TableCell>✔️</TableCell>
                 <TableCell>❎</TableCell>
               </TableRow>
               <TableRow className="hover:bg-gray-50 transition-colors">
