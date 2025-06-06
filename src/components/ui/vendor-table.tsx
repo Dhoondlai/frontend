@@ -65,8 +65,8 @@ export function VendorTable({ className }: VendorTableProps) {
                     Buyerspk
                   </a>
                 </TableCell>
-                <TableCell>🟠 In Progress</TableCell>
-                <TableCell>✔️</TableCell>
+                <TableCell>⛔ BORKED</TableCell>
+                <TableCell>❎</TableCell>
                 <TableCell>❎</TableCell>
                 <TableCell>❎</TableCell>
                 <TableCell>❎</TableCell>
